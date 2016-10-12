@@ -6,21 +6,17 @@ The Docker container contains sixpack and sixpack-web server environment.
 
 If you just run sixpack with docker, you can use trusted builds registered [Docker index][di],
 
-    docker pull ainoya/sixpack
+    docker pull scottbcovert/sixpack
 
 ## Deploying
 
-* Run `docker build -t sixpack-server`
-* Run `docker run -d sixpack-server`
+* Run `docker build . -t sixpack-server`
 
 ## Running
 
 Another example of running sixpack is:
 
-    docker run -d -t --name sixpack-server \
-                -p 5000:5000 \
-                -p 49022:22 \
-                -p 5001:5001 sixpack-server
+* Run `docker run -d -t --name sixpack-server -p 5000:5000 -p 5001:5001 sixpack-server`
 
 ## Contributing
 
@@ -44,4 +40,4 @@ Sixpack is a language-agnostic a/b-testing framework.
 
 
 [fk]: http://help.github.com/forking/
-[di]: https://index.docker.io/u/ainoya/sixpack/
+[di]: https://index.docker.io/u/scottbcovert/sixpack/

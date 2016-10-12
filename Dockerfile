@@ -1,19 +1,16 @@
-FROM centos
+FROM ubuntu:14.04
 
 MAINTAINER Naoki AINOYA <ainonic@gmail.com>
+MAINTAINER Scott Covert <scottbcovert@gmail.com>
 
-# setup remi repository
-RUN yum -y install wget tar
-RUN wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-RUN wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-RUN curl -O http://rpms.famillecollet.com/RPM-GPG-KEY-remi; rpm --import RPM-GPG-KEY-remi
-RUN rpm -Uvh remi-release-6*.rpm epel-release-6*.rpm
-RUN yum -y update
-RUN yum -y upgrade
-RUN yum -y install python-setuptools python-devel git gcc java-1.7.0-openjdk
-RUN yum -y install make
-RUN easy_install pip pyyaml
-
+# setup Python, build tools and environment
+RUN apt-get update && apt-get dist-upgrade -y
+RUN apt-get install -y wget tar
+RUN apt-get install -y python-setuptools python-dev git build-essential
+RUN apt-get install -y libyaml-dev
+# PyYAML version must be kept up to date with requirement in
+# https://github.com/seatgeek/sixpack/blob/master/requirements.txt
+RUN easy_install pip pyyaml==3.10
 RUN echo 'root:sixpack' | chpasswd
 
 # setup redis
@@ -35,9 +32,10 @@ ADD template/redis.conf /etc/redis/6379.conf
 
 # setup td-agent
 
-RUN yum -y install sudo
-ADD scripts/install-redhat.sh ./install-redhat.sh
-RUN sh ./install-redhat.sh
+RUN apt-get install -y sudo
+RUN apt-get install -y curl tar
+ADD scripts/install-ubuntu.sh ./install-ubuntu.sh
+RUN sh ./install-ubuntu.sh
 RUN /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-sixpack
 
 ADD template/td-agent.conf /etc/td-agent/td-agent.conf
