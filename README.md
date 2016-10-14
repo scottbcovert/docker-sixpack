@@ -6,7 +6,7 @@ The Docker container contains sixpack and sixpack-web server environment.
 
 If you just run sixpack with docker, you can use trusted builds registered [Docker index][di],
 
-    docker pull scottbcovert/sixpack
+    docker-compose up -d
 
 ## Deploying
 
