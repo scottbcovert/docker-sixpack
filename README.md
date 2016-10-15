@@ -18,6 +18,12 @@ Another example of running sixpack is:
 
 * Run `docker run -d -t --name sixpack-server -p 5000:5000 -p 5001:5001 sixpack-server`
 
+## Dokku Usage
+
+If using Dokku you will need to set up port mapping between your Dokku host and the sixpack-server container directly from your Dokku host's terminal:
+
+* Run `dokku config:set [App Name] DOKKU_PROXY_PORT_MAP="http:80:5001 http:8080:5001 https:443:5001 https:5000:5000 https:8443:5001"`
+
 ## Contributing
 
 Once you've made your great commits:
